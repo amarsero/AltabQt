@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     altab.cpp \
+    crawler.cpp \
     deposit.cpp \
     deserializableobject.cpp \
     entry.cpp \
@@ -27,6 +28,7 @@ SOURCES += \
 
 HEADERS += \
     altab.h \
+    crawler.h \
     deposit.h \
     deserializableobject.h \
     entry.h \

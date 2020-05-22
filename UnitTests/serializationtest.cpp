@@ -1,44 +1,16 @@
-#include <QtTest>
+#include "serializationtest.h"
 
-#include <memory>
-#include <sstream>
-
-#include <shortcutentry.h>
-#include <serializableobject.h>
-#include <deserializableobject.h>
-
-class Serialization : public QObject
-{
-    Q_OBJECT
-
-public:
-    Serialization();
-    ~Serialization();
-private:
-    ShortcutEntry* newEntry = nullptr;
-private slots:
-    void initTestCase();
-    void cleanupTestCase();
-    void ShortcutEntrySerialization();
-
-};
-
-Serialization::Serialization()
+SerializationTest::SerializationTest()
 {
 
 }
 
-Serialization::~Serialization()
+void SerializationTest::initTestCase()
 {
 
 }
 
-void Serialization::initTestCase()
-{
-
-}
-
-void Serialization::cleanupTestCase()
+void SerializationTest::cleanupTestCase()
 {
     if (newEntry != nullptr)
     {
@@ -47,7 +19,7 @@ void Serialization::cleanupTestCase()
     }
 }
 
-void Serialization::ShortcutEntrySerialization()
+void SerializationTest::ShortcutEntrySerialization()
 {
     std::unique_ptr<ShortcutEntry> entry = std::unique_ptr<ShortcutEntry>(new ShortcutEntry());
 
@@ -79,7 +51,3 @@ void Serialization::ShortcutEntrySerialization()
     delete newEntry;
     newEntry = nullptr;
 }
-
-QTEST_APPLESS_MAIN(Serialization)
-
-#include "tst_serialization.moc"
