@@ -6,6 +6,11 @@
 #include <string>
 #include <entry.h>
 
+Persistence::Persistence(const Deposit *deposit)
+{
+    this->deposit = deposit;
+}
+
 void Persistence::Save()
 {
     std::ofstream file;
@@ -24,4 +29,14 @@ void Persistence::Save()
     remove(path);
     std::rename(bakPath, path);
     remove(bakPath);
+}
+
+void Persistence::SaveConfig(Config config)
+{
+
+}
+
+Config Persistence::LoadConfig()
+{
+    return Config{};
 }

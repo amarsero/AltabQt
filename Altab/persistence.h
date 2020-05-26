@@ -4,12 +4,19 @@
 #include <string>
 #include <deposit.h>
 
+struct Config {
+    std::string testString;
+    int testNumber;
+};
+
 class Persistence
 {
 public:
-    Persistence(const std::string savePath, const Deposit* deposit);
+    Persistence(const Deposit* deposit);
     void Save();
     void Load();
+    void SaveConfig(Config config);
+    Config LoadConfig();
 private:
     std::string savePath;
     const Deposit* deposit;

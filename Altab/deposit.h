@@ -8,9 +8,11 @@ class Deposit
 {
 public:
     Deposit();
+    ~Deposit();
     std::vector<Entry*>* Entries;
 
-    const std::vector<Entry *>* SearchAll(std::string search);
+    const std::vector<Entry*>* SearchAll(const std::string search);
+    void Clear();
 };
 
 #endif // DEPOSIT_H

@@ -3,7 +3,9 @@ CONFIG -= qt
 TEMPLATE = lib
 CONFIG += staticlib
 
-CONFIG += c++11
+CONFIG += c++17
+
+LIBS += -lstdc++fs
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -35,6 +37,8 @@ HEADERS += \
     persistence.h \
     serializableobject.h \
     shortcutentry.h
+
+INCLUDEPATH += include/
 
 # Default rules for deployment.
 unix {
