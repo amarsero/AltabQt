@@ -24,9 +24,12 @@ SOURCES += \
     deposit.cpp \
     deserializableobject.cpp \
     entry.cpp \
+    ios.cpp \
+    linuxos.cpp \
     persistence.cpp \
     serializableobject.cpp \
-    shortcutentry.cpp
+    shortcutentry.cpp \
+    windowsos.cpp
 
 HEADERS += \
     altab.h \
@@ -34,9 +37,14 @@ HEADERS += \
     deposit.h \
     deserializableobject.h \
     entry.h \
+    ios.h \
+    linuxos.h \
     persistence.h \
     serializableobject.h \
-    shortcutentry.h
+    shortcutentry.h \
+    windowsos.h
+
+INCLUDEPATH += include/
 
 INCLUDEPATH += include/
 

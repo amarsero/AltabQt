@@ -3,6 +3,7 @@
 #include <QtTest>
 #include <serializationtest.h>
 #include <deposittest.h>
+#include <persistencetest.h>
 
 #ifdef QTEST_APPLESS_MAIN
 #   undef QTEST_APPLESS_MAIN
@@ -17,6 +18,7 @@ int main(int argc, char *argv[])
 
     runTest(new SerializationTest());
     runTest(new DepositTest());
+    runTest(new PersistenceTest());
 }
 #endif
 

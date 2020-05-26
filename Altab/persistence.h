@@ -2,7 +2,20 @@
 #define PERSISTENCE_H
 
 #include <string>
+
 #include <deposit.h>
+#include <json.hpp>
+#include <filesystem>
+
+struct Config {
+    Config() = default;
+
+    std::string testString;
+    int testNumber;
+
+    operator nlohmann::json() const;
+    Config(nlohmann::json& json);
+};
 
 struct Config {
     std::string testString;
@@ -15,11 +28,11 @@ public:
     Persistence(const Deposit* deposit);
     void Save();
     void Load();
-    void SaveConfig(Config config);
     Config LoadConfig();
+    void SaveConfig(const Config& config);
 private:
-    std::string savePath;
     const Deposit* deposit;
+
 };
 
 #endif // PERSISTENCE_H
