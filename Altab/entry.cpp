@@ -24,22 +24,22 @@ void Entry::Serialize(SerializableObject& serializing) const
     serializing.Add(RunCount);
 }
 
-void Entry::FillDeserialize(DeserializableObject& serialized, Entry* entry)
+void Entry::FillDeserialize(DeserializableObject& serialized, Entry& entry)
 {
-    serialized.Get(entry->Name);
+	serialized.Get(entry.Name);
     //Icon deserialization missing
-    serialized.Get(entry->RunCount);
+	serialized.Get(entry.RunCount);
 }
 
-class Entry* Entry::Deserialize(DeserializableObject& serialized)
+std::shared_ptr<Entry> Entry::Deserialize(DeserializableObject& serialized)
 {
     switch (serialized.Type) {
     case SerializableObjectType::Entry: {
         throw "This should never happen";
     }
     case SerializableObjectType::ShortcutEntry : {
-        ShortcutEntry* entry = new ShortcutEntry();
-        ShortcutEntry::Deserialize(serialized, entry);
+        auto entry = std::make_shared<ShortcutEntry>();
+		ShortcutEntry::Deserialize(serialized, *entry);
         return entry;
     }
     default: {

@@ -7,7 +7,7 @@ class LinuxOS : public IOS
 public:
     LinuxOS();
 
-    std::string GetSaveFolder() override;
+    const std::filesystem::path& GetSaveFolder() override;
 };
 
 #endif // LINUXOS_H

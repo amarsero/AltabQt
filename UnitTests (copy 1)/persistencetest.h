@@ -13,7 +13,7 @@ public:
 
 private:
     Deposit deposit{};
-    std::vector<std::shared_ptr<const Entry>> originalEntries;
+    std::vector<Entry*> originalEntries;
 
 private slots:
     void initTestCase();

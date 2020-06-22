@@ -1,11 +1,15 @@
 #include "linuxos.h"
+#include <stdlib.h>
 
 LinuxOS::LinuxOS()
 {
 
 }
 
-std::string LinuxOS::GetSaveFolder()
+const std::filesystem::path& LinuxOS::GetSaveFolder()
 {
-    return std::string("~/.config/altab/");
+    static const std::filesystem::path saveFolder{
+        std::string{getenv("HOME")} +
+        "/.config/altab/"};
+    return saveFolder;
 }

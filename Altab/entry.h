@@ -13,16 +13,16 @@ public:
     virtual ~Entry();
     std::string Name;
     u_int8_t* Icon{};
-    int RunCount{};
+    mutable int RunCount{};
     virtual void Serialize(SerializableObject& serializing) const;
-    static Entry* Deserialize(DeserializableObject& serialized);
+    static std::shared_ptr<Entry> Deserialize(DeserializableObject& serialized);
 
     virtual bool Run(){return false;}
     virtual bool Matches(const std::string* /*search*/) const{return false;}
     virtual int SerializedLength() const;
 
 protected:
-    static void FillDeserialize(DeserializableObject& serialized, Entry* entry);
+    static void FillDeserialize(DeserializableObject& serialized, Entry& entry);
 };
 
 #endif // ENTRY_H

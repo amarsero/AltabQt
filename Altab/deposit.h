@@ -7,11 +7,10 @@
 class Deposit
 {
 public:
-    Deposit();
     ~Deposit();
-    std::vector<Entry*>* Entries;
+    std::vector<std::shared_ptr<const Entry>> entries;
 
-    const std::vector<Entry*>* SearchAll(const std::string search);
+    const std::unique_ptr<std::vector<std::shared_ptr<const Entry>>> SearchAll(const std::string search);
     void Clear();
 };
 

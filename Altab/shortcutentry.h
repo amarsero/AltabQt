@@ -13,7 +13,7 @@ public:
     bool Matches(const std::string *search) const override;
     void Serialize(SerializableObject& serialized) const override;
     int SerializedLength() const override;
-    static void Deserialize(DeserializableObject& serialized, Entry* entry) ;
+	static void Deserialize(DeserializableObject& serialized, ShortcutEntry& entry) ;
 };
 
 #endif // SHORTCUTENTRY_H

@@ -2,10 +2,15 @@
 #include <memory>
 #include <cstring>
 
-SerializableObject::SerializableObject(char *byteArray, const int length, const char type)
-    : length(length), Type((SerializableObjectTypeEnum) type), bytes(byteArray)
+
+
+SerializableObject::SerializableObject(Entry& entry)
+    : length(entry.SerializedLength()),
+      bytes(32)
 {
+
 }
+
 
 template<typename T>
 void SerializableObject::Add(const T& item)
@@ -39,7 +44,7 @@ std::vector<char> SerializableObject::ToVector()
     int totalSize = index + sizeof(char) + sizeof(int);
     std::vector<char> vector(totalSize);
     vector[0] = Type;
-    memcpy(&vector[sizeof(char)], &totalSize, sizeof(int));
+	memcpy(&vector[sizeof(char)], &index, sizeof(int));
 
     memcpy(&vector[sizeof(char) + sizeof(int)], bytes, index);
 

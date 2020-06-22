@@ -4,6 +4,7 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include <entry.h>
 
 namespace SerializableObjectType {
     enum SerializableObjectTypeEnum: char {
@@ -17,7 +18,7 @@ using SerializableObjectType::SerializableObjectTypeEnum;
 class SerializableObject
 {
 public:
-    SerializableObject(char* bytes, const int length, char type);
+    SerializableObject(Entry& entry);
 
     const int length;
     const enum SerializableObjectTypeEnum Type;
@@ -28,8 +29,8 @@ public:
     std::vector<char> ToVector();
 
 private:
-    char* bytes;
     int index = 0;
+    char bytes[];
 
 };
 

@@ -32,6 +32,6 @@ else:unix: PRE_TARGETDEPS += $$OUT_PWD/../Altab/libAltab.a
 
 HEADERS += \
     deposittest.h \
-    serializationtest.h \
-    persistencetest.h
+    persistencetest.h \
+    serializationtest.h
 

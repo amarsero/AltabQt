@@ -7,30 +7,22 @@
 #include <entry.h>
 #include <vector>
 #include <ios.h>
+#include <deserializableobject.h>
 
 namespace fs = std::filesystem;
 
 using nlohmann::json;
 
-Persistence::Persistence(const Deposit *deposit)
-{
-    this->deposit = deposit;
-}
-
-Persistence::Persistence(const Deposit *deposit)
-{
-    this->deposit = deposit;
-}
-
-void Persistence::Save()
+void Persistence::SaveEntries(const Deposit& deposit)
 {
     fs::path filePath{IOS::Instance().GetSaveFolder()};
+    fs::create_directories(filePath);
     filePath += "tuvieja.sav";
-    fs::path copy(filePath);
+    fs::path copy{filePath};
     copy += ".bak";
     {
-        std::ofstream file{filePath, std::ios::binary};
-        for (Entry* entry : *deposit->Entries)
+		std::ofstream file{copy, std::ios::binary};
+        for (auto entry : deposit.entries)
         {
             int length = entry->SerializedLength();
             char bytes[length];
@@ -45,7 +37,33 @@ void Persistence::Save()
         }
     }
 
-    fs::rename(copy, filePath);
+	fs::rename(copy, filePath);
+}
+
+void Persistence::LoadEntries(Deposit& deposit)
+{
+    fs::path filePath{IOS::Instance().GetSaveFolder()};
+    fs::create_directories(filePath);
+    filePath += "tuvieja.sav";
+    {
+        std::ifstream file{filePath, std::ios::binary};
+		if (file.fail())
+			return;
+        char type = file.get();
+		while(!file.eof())
+        {
+			int size;
+			file.read((char*)&size, sizeof(int));
+            char bytes[size];
+			file.read(bytes, size);
+
+            DeserializableObject deserializable{bytes, size, type};
+
+            deposit.entries.push_back(Entry::Deserialize(deserializable));
+
+            type = file.get();
+		}
+	}
 }
 
 Config Persistence::LoadConfig()
@@ -53,6 +71,7 @@ Config Persistence::LoadConfig()
     Config config;
 
     fs::path configPath = IOS::Instance().GetSaveFolder();
+    fs::create_directories(configPath);
     configPath += "config";
 
     if (!fs::exists(configPath))
@@ -72,15 +91,16 @@ Config Persistence::LoadConfig()
 
 void Persistence::SaveConfig(const Config &config)
 {
-    fs::path path = IOS::Instance().GetSaveFolder();
+    fs::path path{IOS::Instance().GetSaveFolder()};
+    fs::create_directories(path);
     path += "config";
     fs::path copy(path);
     copy += ".bak";
-
     {
         std::ofstream file{copy};
         json j = config;
         file << j;
+        file.flush();
     }
 
     fs::rename(copy, path);
@@ -100,14 +120,4 @@ Config::Config(nlohmann::json &json)
 {
     json.at("testString").get_to(this->testString);
     json.at("testNumber").get_to(this->testNumber);
-}
-
-void Persistence::SaveConfig(Config config)
-{
-
-}
-
-Config Persistence::LoadConfig()
-{
-    return Config{};
 }

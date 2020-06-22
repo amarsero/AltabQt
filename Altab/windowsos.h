@@ -7,7 +7,7 @@ class WindowsOS : public IOS
 public:
     WindowsOS();
 
-    std::string GetSaveFolder() override;
+    const std::filesystem::path& GetSaveFolder() override;
 };
 
 #endif // WINDOWSOS_H

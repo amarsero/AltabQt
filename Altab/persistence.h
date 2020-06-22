@@ -17,22 +17,13 @@ struct Config {
     Config(nlohmann::json& json);
 };
 
-struct Config {
-    std::string testString;
-    int testNumber;
-};
-
 class Persistence
 {
 public:
-    Persistence(const Deposit* deposit);
-    void Save();
-    void Load();
-    Config LoadConfig();
-    void SaveConfig(const Config& config);
-private:
-    const Deposit* deposit;
-
+    static void SaveEntries(const Deposit& deposit);
+    static void LoadEntries(Deposit& deposit);
+    static Config LoadConfig();
+    static void SaveConfig(const Config& config);
 };
 
 #endif // PERSISTENCE_H

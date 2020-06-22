@@ -1,16 +1,18 @@
 #include "windowsos.h"
 #include <stdlib.h>
-#include <filesystem>
 
 WindowsOS::WindowsOS()
 {
 
 }
 
-
-std::string WindowsOS::GetSaveFolder()
+const std::filesystem::path& WindowsOS::GetSaveFolder()
 {
-    if (cache.count("SaveFolder") == 0)
-       cache["SaveFolder"] = std::string(getenv("APPDATA")) + std::filesystem::path::preferred_separator;
-    return cache["SaveFolder"];
+    static const std::filesystem::path saveFolder{
+        std::string{getenv("HOME")} +
+        std::filesystem::path::preferred_separator +
+        "altab" +
+        std::filesystem::path::preferred_separator};
+
+    return saveFolder;
 }

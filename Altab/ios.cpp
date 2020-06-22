@@ -27,8 +27,6 @@
 
 IOS& IOS::Instance()
 {
-    if (instance == nullptr) {
-        instance = NEW_OSCLASS();
-    }
+    static IOS* instance = NEW_OSCLASS();
     return *instance;
 }

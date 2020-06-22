@@ -1,8 +1,8 @@
 #include <QObject>
 #include <vector>
 #include <QtTest>
-#include <deposittest.h>
 #include <serializationtest.h>
+#include <deposittest.h>
 #include <persistencetest.h>
 
 #ifdef QTEST_APPLESS_MAIN
@@ -16,12 +16,12 @@ int main(int argc, char *argv[])
         status |= QTest::qExec(obj, argc, argv);
     };
 
+    runTest(new SerializationTest());
     runTest(new DepositTest());
     runTest(new PersistenceTest());
-    runTest(new SerializationTest());
 }
 #endif
 
-QTEST_APPLESS_MAIN(DepositTest)
+QTEST_APPLESS_MAIN(SerializationTest)
 
 

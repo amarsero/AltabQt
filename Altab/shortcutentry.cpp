@@ -28,9 +28,6 @@ bool ShortcutEntry::Matches(const std::string*  /*search*/) const {
 
 void ShortcutEntry::Serialize(SerializableObject& serialized) const
 {
-   int baseEntryLength = Entry::SerializedLength();
-   char baseEntryBytes[baseEntryLength];
-
    SerializableObject baseEntry(baseEntryBytes, baseEntryLength, SerializableObjectTypeEnum::Entry);
 
    Entry::Serialize(baseEntry);
@@ -40,17 +37,15 @@ void ShortcutEntry::Serialize(SerializableObject& serialized) const
    serialized.Add(TargetPath);
 }
 
-void ShortcutEntry::Deserialize(DeserializableObject& serialized, Entry* entry)
+void ShortcutEntry::Deserialize(DeserializableObject& serialized, ShortcutEntry& shortcutEntry)
 {
-    ShortcutEntry* shortcutEntry = (ShortcutEntry*)entry;
-
     int size = serialized.GetDeserializableObjectBytesSize();
     char baseBytes[size];
     DeserializableObject baseDeserializable = serialized.GetDeserializableObject(baseBytes, size);
-    Entry::FillDeserialize(baseDeserializable, entry);
+	Entry::FillDeserialize(baseDeserializable, shortcutEntry);
 
-    serialized.Get(shortcutEntry->FullPath);
-    serialized.Get(shortcutEntry->TargetPath);
+	serialized.Get(shortcutEntry.FullPath);
+	serialized.Get(shortcutEntry.TargetPath);
 }
 
 int ShortcutEntry::SerializedLength() const

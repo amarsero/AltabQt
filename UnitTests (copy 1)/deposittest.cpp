@@ -15,22 +15,25 @@ void DepositTest::initTestCase()
         ShortcutEntry* entry = new ShortcutEntry();
         entry->Name = name;
         entry->RunCount = rand();
-        deposit.entries.push_back(std::shared_ptr<Entry>(entry));
+        deposit.Entries.push_back(entry);
     }
 
 }
 
 void DepositTest::cleanupTestCase()
 {
+    for (auto entry: deposit.Entries) {
+        delete entry;
+    }
 }
 
 void DepositTest::SearchAll()
 {
     {
-        auto result = deposit.SearchAll("David");
+    auto result = deposit.SearchAll("David");
 
-        QVERIFY(result->size() > 0);
-        QCOMPARE(result->at(0), deposit.entries[0]);
+    QVERIFY(result->size() > 0);
+    QCOMPARE(result->at(0), deposit.Entries[0]);
     }
 
     auto result = deposit.SearchAll("mar");
@@ -38,12 +41,10 @@ void DepositTest::SearchAll()
     QVERIFY(result->size() >= 3);
 
     QVERIFY(
-            std::all_of(correctNames.begin(), correctNames.end(), [&](std::string name){
-                return std::any_of(result->begin(), result->end(), [&](auto entry){
-                    return entry->Name == name;
-                });
-            })
-        );
-
-
+        std::all_of(correctNames.begin(), correctNames.end(), [&](std::string name){
+            return std::any_of(result->begin(), result->end(), [&](Entry* entry){
+                return entry->Name == name;
+            });
+        })
+    );
 }

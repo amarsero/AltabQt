@@ -8,14 +8,6 @@ DeserializableObject::DeserializableObject(char *bytes, const int length, const 
 {
 }
 
-DeserializableObject::DeserializableObject(char *bytes, const int length)
-    : length(length - sizeof (char) - sizeof (int)),
-      Type((SerializableObjectTypeEnum)bytes[0]),
-      bytes(bytes)
-{
-    index += sizeof (char) + sizeof (int);
-}
-
 inline DeserializableObject *DeserializableObject::StackAllocate()
 {
     return (DeserializableObject*) alloca(sizeof(SerializableObject));

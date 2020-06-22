@@ -7,7 +7,6 @@
 class DeserializableObject
 {
 public:
-    DeserializableObject(char* bytes, const int length);
     DeserializableObject(char* bytes, const int length, const char type);
 
     const int length;

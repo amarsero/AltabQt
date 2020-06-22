@@ -2,14 +2,14 @@
 #include <future>
 #include <crawler.h>
 
-Altab::Altab() : persistence(&deposit) {
+Altab::Altab() {
     std::async(std::launch::async, &Altab::Init, this);
 }
 
 void Altab::Init()
 {
     LoadConfig();
-    persistence.Load();
+	Persistence::LoadEntries(deposit);
     Crawler::CrawlNewPath(deposit, "D:/Users/Agus/Desktop");
     Crawler::CrawlNewPath(deposit, "D:/Users/Public/Desktop");
     Crawler::CrawlNewPath(deposit, "C:/Users/Pun/Desktop");
@@ -17,7 +17,7 @@ void Altab::Init()
 //    Deposit.Entries.Add(new Entries.GoogleSearchEntry());
 //    Deposit.Entries.Add(new Entries.YoutubeSearchEntry());
 //    Deposit.RemoveDuplicates();
-    persistence.Save();
+    Persistence::SaveEntries(deposit);
 }
 
 void Altab::LoadConfig() {

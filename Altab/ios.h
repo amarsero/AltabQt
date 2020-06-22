@@ -1,18 +1,13 @@
 #ifndef IOS_H
 #define IOS_H
 
-#include <string>
-#include <map>
+#include <filesystem>
 
 class IOS
 {
 public:
     static IOS& Instance();
-    virtual std::string GetSaveFolder() = 0;
-protected:
-    std::map<std::string, std::string> cache{};
-private:
-    static IOS* instance;
+    virtual const std::filesystem::path& GetSaveFolder() = 0;
 };
 
 #endif // IOS_H

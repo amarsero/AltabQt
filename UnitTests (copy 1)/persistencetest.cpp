@@ -13,22 +13,22 @@ PersistenceTest::PersistenceTest()
 
 void PersistenceTest::initTestCase()
 {
-    std::shared_ptr<Entry> entry;
-    std::vector<std::string> nombres = {
-        "hola", "chau"
-    };
-    for(size_t i = 0; i < nombres.size(); i++)
+    Entry* entry;
+	for(int i = 0; i < 2; i++)
     {
-        entry = std::make_shared<ShortcutEntry>();
-        entry->Name = nombres[i];
-        entry->RunCount = (1 + i) * 255;
-        originalEntries.push_back(entry);
-        deposit.entries.push_back(entry);
+        entry = new ShortcutEntry();
+        entry->Name = std::to_string(i);
+        deposit.Entries.push_back(entry);
     }
+    originalEntries = deposit.Entries;
 }
 
 void PersistenceTest::cleanupTestCase()
 {
+    for(Entry* entry: originalEntries)
+    {
+        delete entry;
+    }
 }
 
 void PersistenceTest::SaveLoadConfig()
@@ -56,13 +56,13 @@ void PersistenceTest::SaveLoadEntries()
 	}  catch (std::exception& e) {
 		qDebug("%s", e.what());
 	}
-    deposit.entries.clear();
+	deposit.Clear();
 	Persistence::LoadEntries(deposit);
 
-    QCOMPARE(deposit.entries.size(), originalEntries.size());
+	QCOMPARE(deposit.Entries.size(), originalEntries.size());
 
 	for(size_t i = 0; i < originalEntries.size(); i++) {
-        QCOMPARE(deposit.entries[i]->Name, originalEntries[i]->Name);
-        QCOMPARE(deposit.entries[i]->RunCount, originalEntries[i]->RunCount);
+		QCOMPARE(deposit.Entries[i]->Name, originalEntries[i]->Name);
+		QCOMPARE(deposit.Entries[i]->RunCount, originalEntries[i]->RunCount);
 	}
 }

@@ -3,34 +3,27 @@
 #include "entry.h"
 #include <algorithm>
 
-Deposit::Deposit()
-{
-    Entries = new std::vector<Entry*>();
-}
-
 Deposit::~Deposit()
 {
-    Clear();
-    delete Entries;
+	Clear();
 }
 
 void Deposit::Clear(){
-    std::for_each(Entries->begin(),Entries->end(), [](auto entry){delete entry;});
-    Entries->clear();
+    entries.clear();
 }
 
-const std::vector<Entry *>* Deposit::SearchAll(const std::string search)
+const std::unique_ptr<std::vector<std::shared_ptr<const Entry>>> Deposit::SearchAll(const std::string search)
 {
     if (search.empty()){
-        return new std::vector<Entry*>(*Entries);
+        return std::make_unique<std::vector<std::shared_ptr<const Entry>>>(entries);
     }
-    std::vector<Entry*>* result = new std::vector<Entry*>();
+    auto result = std::make_unique<std::vector<std::shared_ptr<const Entry>>>();
 
     std::string searchUpper;
     std::transform(search.begin(), search.end(), std::back_inserter(searchUpper),
                    (int (*)(int))std::toupper);
 
-    for(Entry* entry: *Entries) {
+    for(std::shared_ptr<const Entry> entry: entries) {
         std::string nameUpper;
         std::transform(entry->Name.begin(), entry->Name.end(), std::back_inserter(nameUpper),
                        (int (*)(int))std::toupper);
